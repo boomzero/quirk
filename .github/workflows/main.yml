@@ -7,14 +7,25 @@ on:
     branches: [ master ]
 
 jobs:
+  pre_scripts:
+    runs-on: [self-hosted, Linux]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v1.4.2
+        with:
+          node-version: 12.16.3
+          version: 1.4.2
+      - name: Install yarn
+        run: |
+          npm install -g yarn
   build:
     runs-on: [self-hosted, Linux]
-
     steps: 
       - uses: actions/checkout@v2
-      - name: Install yarn expo-cli
+      - name: Install expo-cli
         run: |
-          npm install -g yarn expo-cli
+          npm install -g expo-cli
       - name: Install deps
         run: |
           yarn
