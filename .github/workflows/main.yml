@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: [self-hosted, Linux]
+
+    steps: 
+      - uses: actions/checkout@v2
+      - name: Install yarn expo-cli
+        run: |
+          npm install -g yarn expo-cli
+      - name: Install deps
+        run: |
+          yarn
+      - name: Configure env
+        run: |
+            cp .env.sample .env
+      - name: Test
+        run: |
+          yarn test
+#       - name: configure env
+#         run: |
+#           cat << EOF > .env
+#           STREAM_API_KEY=test
+#           STREAM_API_TOKEN=test
+#           STREAM_APP_ID=test
+#           EOF
+
