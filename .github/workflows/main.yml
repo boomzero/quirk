@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   pre_scripts:
@@ -15,26 +15,27 @@ jobs:
         uses: actions/setup-node@v1.4.2
         with:
           node-version: 12.16.3
-          version: 1.4.2
       - name: Install yarn
         run: |
-          npm install -g yarn
+          sudo npm install -g yarn
   build:
+    needs: [pre_scripts]
     runs-on: [self-hosted, Linux]
-    steps: 
+    steps:
       - uses: actions/checkout@v2
       - name: Install expo-cli
         run: |
-          npm install -g expo-cli
+          sudo npm install -g expo-cli
       - name: Install deps
         run: |
           yarn
       - name: Configure env
         run: |
-            cp .env.sample .env
+          cp .env.sample .env
       - name: Test
         run: |
           yarn test
+
 #       - name: configure env
 #         run: |
 #           cat << EOF > .env
