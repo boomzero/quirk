@@ -29,18 +29,14 @@ jobs:
       - name: Install deps
         run: |
           yarn
-      - name: Configure env
-        run: |
-          cp .env.sample .env
-      - name: Test
+      - name: Run test
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          APPLE_SHARED_SECRET: ${{ secrets.APPLE_SHARED_SECRET }}
+          ONESIGNAL_SECRET: ${{ secrets.ONESIGNAL_SECRET }}
+          REVENUECAT_API_KEY: ${{ secrets.REVENUECAT_API_KEY }}
+          QUIRK_API_SECRET: ${{ secrets.QUIRK_API_SECRET }}
         run: |
           yarn test
 
-#       - name: configure env
-#         run: |
-#           cat << EOF > .env
-#           STREAM_API_KEY=test
-#           STREAM_API_TOKEN=test
-#           STREAM_APP_ID=test
-#           EOF
 
